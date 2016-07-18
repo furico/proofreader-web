@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>編集チェッカー</h1>
+  <div id="editor" style="margin: 20px;padding: 15px;">
+    <textarea class="form-textarea" v-model="input"></textarea>
+    <div v-html="input | check" style="padding: 20px;"></div>
+  </div>
+{% endblock %}
