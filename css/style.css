@@ -4,6 +4,14 @@ html, body, #editor {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333;
 }
+h1 {
+  padding-left: 10px;
+  margin: 20px;
+}
+#editor {
+  border: solid 1px #ccc;
+  margin: 0 20px;
+}
 textarea, #editor div {
   display: inline-block;
   width: 49%;
@@ -23,6 +31,9 @@ textarea {
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
   padding: 20px;
+}
+div#result {
+   padding: 20px;
 }
 .found {
   color: #F00;
