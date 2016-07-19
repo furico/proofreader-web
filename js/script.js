@@ -20,9 +20,22 @@
     });
     return text
   }
+  function filter_saidoku(text) {
+    var rules = get_rules();
+    rules['saidoku'].forEach(function(saidoku, index) {
+      var re = new RegExp(saidoku, 'g');
+      var tagged = '<span class="found">' + saidoku + '</span>';
+      text = text.replace(re, tagged);
+    });
+    return text
+  }
   Vue.filter('check', function (value) {
-    if (value)
-      return filter_kanji(value)
+    var result = '';
+    if (value) {
+      result = filter_kanji(value);
+      result = filter_saidoku(result);
+      return result;
+    }
   })
   new Vue({
     el: '#editor',
