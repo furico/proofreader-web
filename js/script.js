@@ -15,19 +15,19 @@
     var span = global.document.createElement('span');
     span.className = 'found';
     span.dataset.rule = rule;
-    span.dataset.target = target['data'];
-    span.textContent = target['data'];
+    span.dataset.target = target;
+    span.textContent = target;
     return span;
   }
   var applyFilter = (function() {
     return function(rule, text) {
       var rules = get_rules();
       var targets = rules[rule]['targets'];
-      targets.forEach(function(target, index) {
-        var re = new RegExp(target['data'], 'g');
+      for (var target in targets) {
+        var re = new RegExp(target, 'g');
         var found = createFoundElement(rule, target);
         text = text.replace(re, found.outerHTML);
-      });
+      }
       return text;
     }
   })();
@@ -49,17 +49,19 @@
         }
         var rules = get_rules();
         var rule = rules[tg.dataset.rule];
-        var target = null;
-        rule.targets.forEach(function(elm, index) {
-          if (elm.data === tg.dataset.target) {
-            target = elm;
-            return;
+        var target = '';
+        var note = '';
+        for (var prop in rule.targets) {
+          if (prop === tg.dataset.target) {
+            target = prop;
+            note = rule.targets[prop];
+            break;
           }
-        })
+        }
         this.info.name = rule.name;
         this.info.desc = rule.desc;
-        this.info.target = target.data;
-        this.info.note = target.note;
+        this.info.target = target;
+        this.info.note = note;
       }
     },
     filters: {
