@@ -19,26 +19,18 @@
     span.textContent = target['data'];
     return span;
   }
-  function filter_kanji(text) {
-    var rules = get_rules();
-    var targets = rules['kanji']['targets'];
-    targets.forEach(function(target, index) {
-      var re = new RegExp(target['data'], 'g');
-      var found = createFoundElement('kanji', target);
-      text = text.replace(re, found.outerHTML);
-    });
-    return text
-  }
-  function filter_saidoku(text) {
-    var rules = get_rules();
-    var targets = rules['saidoku']['targets'];
-    targets.forEach(function(target, index) {
-      var re = new RegExp(target['data'], 'g');
-      var found = createFoundElement('saidoku', target);
-      text = text.replace(re, found.outerHTML);
-    });
-    return text
-  }
+  var applyFilter = (function() {
+    return function(rule, text) {
+      var rules = get_rules();
+      var targets = rules[rule]['targets'];
+      targets.forEach(function(target, index) {
+        var re = new RegExp(target['data'], 'g');
+        var found = createFoundElement(rule, target);
+        text = text.replace(re, found.outerHTML);
+      });
+      return text;
+    }
+  })();
   new Vue({
     el: '#app',
     data: {
@@ -75,8 +67,8 @@
         var result = '';
         if (!value)
           return;
-        result = filter_kanji(value);
-        result = filter_saidoku(result);
+        result = applyFilter('kanji', value);
+        result = applyFilter('saidoku', result);
         return result;
       }
     }
