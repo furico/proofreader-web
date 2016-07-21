@@ -11,17 +11,21 @@
       return rules;
     }
   })();
+  function createFoundElement(rule, target) {
+    var span = global.document.createElement('span');
+    span.className = 'found';
+    span.dataset.rule = rule;
+    span.dataset.target = target['data'];
+    span.textContent = target['data'];
+    return span;
+  }
   function filter_kanji(text) {
     var rules = get_rules();
     var targets = rules['kanji']['targets'];
     targets.forEach(function(target, index) {
       var re = new RegExp(target['data'], 'g');
-      var span = global.document.createElement('span');
-      span.className = 'found';
-      span.dataset.rule = 'kanji';
-      span.dataset.target = target['data'];
-      span.textContent = target['data'];
-      text = text.replace(re, span.outerHTML);
+      var found = createFoundElement('kanji', target);
+      text = text.replace(re, found.outerHTML);
     });
     return text
   }
@@ -30,8 +34,8 @@
     var targets = rules['saidoku']['targets'];
     targets.forEach(function(target, index) {
       var re = new RegExp(target['data'], 'g');
-      var tagged = '<span class="found" data-hoge="bbb">' + target['data'] + '</span>';
-      text = text.replace(re, tagged);
+      var found = createFoundElement('saidoku', target);
+      text = text.replace(re, found.outerHTML);
     });
     return text
   }
