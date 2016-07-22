@@ -66,16 +66,13 @@
     el: '#app',
     data: {
       input: '',
-      info: {name: '', desc: '', target: '', note: ''}
+      info: {}
     },
     methods: {
       showMessage: function(event) {
         var tg = event.target;
         if (tg.className !== 'found') {
-          this.info.name = '';
-          this.info.desc = '';
-          this.info.target = '';
-          this.info.note = '';
+          this.info = {};
           return;
         }
         var rules = get_rules();
@@ -89,10 +86,12 @@
             break;
           }
         }
-        this.info.name = rule.name;
-        this.info.desc = rule.desc;
-        this.info.target = target;
-        this.info.note = note;
+        this.info = {
+          name: rule.name,
+          desc: rule.desc,
+          target: target,
+          note: note
+        };
       }
     },
     filters: {
