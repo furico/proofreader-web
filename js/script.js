@@ -1,5 +1,10 @@
 (function(global) {
   'use strict';
+  function extend(obj1, obj2) {
+    for (var key in obj2) {
+      obj1[key] = obj2[key];
+    }
+  }
   // 編集ルールを取得する
   var get_rules = (function() {
     var rules = null;
@@ -19,19 +24,45 @@
     span.textContent = target;
     return span;
   }
-  var applyFilter = (function() {
-    return function(rule, text) {
-      var rules = get_rules();
-      var targets = rules[rule]['targets'];
-      for (var target in targets) {
-        var re = new RegExp(target, 'g');
-        var found = createFoundElement(rule, target);
-        text = text.replace(re, found.outerHTML);
+  var getPlaceHolder = (function() {
+    var count = -1;
+    return {
+      get: function() {
+        count += 1;
+        return '<' + count + '>';
+      },
+      reset: function() {
+        count = -1;
       }
-      return text;
-    }
+    };
   })();
-  new Vue({
+  function preRuleMapper(rule, text, placeHolderMap) {
+    var rules = get_rules();
+    var targets = rules[rule]['targets'];
+    var map = {};
+    for (var target in targets) {
+      var re = new RegExp(target, 'g');
+      if (text.search(re) == -1)
+        continue;
+      var found = createFoundElement(rule, target);
+      var placeHolder = getPlaceHolder.get();
+      text = text.replace(re, placeHolder);
+      map[placeHolder] = found.outerHTML;
+    }
+    extend(placeHolderMap, map);
+    return text
+  }
+  function ruleMapper(text, placeHolderMap) {
+    for (var key in placeHolderMap) {
+      var re = new RegExp(key, 'g');
+      text = text.replace(re, placeHolderMap[key])
+    }
+    return text
+  }
+  function replaceReturnCode(text) {
+    return text.replace(/\n/g, '<br>');
+  }
+  var app = new Vue({
     el: '#app',
     data: {
       input: '',
@@ -66,12 +97,15 @@
     },
     filters: {
       check: function (value) {
-        var result = '';
+        var placeHolderMap = {};
+        getPlaceHolder.reset();
         if (!value)
           return;
-        result = applyFilter('kanji', value);
-        result = applyFilter('saidoku', result);
-        return result;
+        value = preRuleMapper('kanji', value, placeHolderMap);
+        value = preRuleMapper('saidoku', value, placeHolderMap);
+        value = replaceReturnCode(value);
+        value = ruleMapper(value, placeHolderMap);
+        return value;
       }
     }
   });
