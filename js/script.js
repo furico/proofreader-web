@@ -77,20 +77,11 @@
         }
         var rules = get_rules();
         var rule = rules[tg.dataset.rule];
-        var target = '';
-        var note = '';
-        for (var prop in rule.targets) {
-          if (prop === tg.dataset.target) {
-            target = prop;
-            note = rule.targets[prop];
-            break;
-          }
-        }
         this.info = {
           name: rule.name,
           desc: rule.desc,
-          target: target,
-          note: note
+          target: tg.dataset.target,
+          note: rule.targets[tg.dataset.target]
         };
       }
     },
