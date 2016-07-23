@@ -16,12 +16,12 @@
       return rules;
     }
   })();
-  function createFoundElement(rule, target) {
+  function createFoundElement(rule, word) {
     var span = global.document.createElement('span');
     span.className = 'found';
     span.dataset.rule = rule;
-    span.dataset.target = target;
-    span.textContent = target;
+    span.dataset.word = word;
+    span.textContent = word;
     return span;
   }
   var getPlaceHolder = (function() {
@@ -38,13 +38,13 @@
   })();
   function preRuleMapper(rule, text, placeHolderMap) {
     var rules = get_rules();
-    var targets = rules[rule]['targets'];
+    var words = rules[rule]['words'];
     var map = {};
-    for (var target in targets) {
-      var re = new RegExp(target, 'g');
+    for (var word in words) {
+      var re = new RegExp(word, 'g');
       if (text.search(re) == -1)
         continue;
-      var found = createFoundElement(rule, target);
+      var found = createFoundElement(rule, word);
       var placeHolder = getPlaceHolder.get();
       text = text.replace(re, placeHolder);
       map[placeHolder] = found.outerHTML;
@@ -80,8 +80,8 @@
         this.info = {
           name: rule.name,
           desc: rule.desc,
-          target: tg.dataset.target,
-          note: rule.targets[tg.dataset.target]
+          word: tg.dataset.word,
+          note: rule.words[tg.dataset.word]
         };
       }
     },
