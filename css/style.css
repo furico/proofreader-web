@@ -8,14 +8,6 @@ h1 {
   padding-left: 10px;
   margin: 20px;
 }
-#info {
-  color: #31708f;
-  border: solid 1px #bce8f1;
-  background-color: #d9edf7;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 5px;
-}
 #editor {
   border: solid 1px #ccc;
   margin: 0 20px 15px 20px;
@@ -36,7 +28,6 @@ textarea {
   resize: none;
   outline: none;
   background-color: #f6f6f6;
-  font-size: 14px;
   font-family: 'Monaco', courier, monospace;
   padding: 20px;
 }
@@ -46,3 +37,16 @@ div#result {
 .found {
   color: #F00;
 }
+#rule-info {
+  border-collapse: collapse;
+  margin: 10px 20px;
+  width: calc(100% - 40px);
+  } #rule-info th, #rule-info td {
+    text-align: left;
+    padding: 5px 10px;
+    border: solid 1px #ccc;
+  } #rule-info th {
+    width: 150px;
+    color: #888;
+    background-color: #ddd;
+  }

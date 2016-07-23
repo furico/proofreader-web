@@ -11,14 +11,26 @@
 </head>
 <body id="app">
   <h1>編集チェッカー</h1>
-  <div id="info">
-    <ul>
-      <li>{{ info.name }}</li>
-      <li>{{ info.desc }}</li>
-      <li>{{ info.word }}</li>
-      <li>{{ info.note }}</li>
-    </ul>
-  </div>
+  <table id="rule-info">
+    <tbody>
+      <tr>
+        <th>ルール</th>
+        <td>{{ info.name }}</td>
+      </tr>
+      <tr>
+        <th>概要</th>
+        <td>{{ info.desc }}</td>
+      </tr>
+      <tr>
+        <th>対象語句</th>
+        <td>{{ info.word }}</td>
+      </tr>
+      <tr>
+        <th>修正方法</th>
+        <td>{{ info.note }}</td>
+      </tr>
+    </tbody>
+  </table>
   <div id="editor">
     <textarea v-model="input"></textarea>
     <div id="result" v-html="input | check" v-on:click="showMessage"></div>
