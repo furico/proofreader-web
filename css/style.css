@@ -34,8 +34,13 @@ textarea {
 div#result {
    padding: 20px;
 }
-.found {
-  color: #F00;
+span.found {
+  color: #f77;
+  font-weight: bold;
+  cursor: pointer;
+} span.found:hover {
+  color: #f22;
+  text-decoration: underline;
 }
 #rule-info {
   border-collapse: collapse;
