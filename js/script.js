@@ -70,18 +70,21 @@
     },
     methods: {
       showMessage: function(event) {
-        var tg = event.target;
-        if (tg.className !== 'found') {
+        var target = event.target;
+        if (target.className !== 'found') {
           this.info = {};
           return;
         }
         var rules = get_rules();
-        var rule = rules[tg.dataset.rule];
+        var rule = rules[target.dataset.rule];
+        var word = target.dataset.word;
+        var wardInfo = rule.words[word];
         this.info = {
           name: rule.name,
           desc: rule.desc,
-          word: tg.dataset.word,
-          note: rule.words[tg.dataset.word]
+          word: target.dataset.word,
+          sub: wardInfo.sub,
+          example: wardInfo.example
         };
       }
     },
