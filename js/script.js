@@ -84,7 +84,7 @@
           desc: rule.desc,
           word: target.dataset.word,
           sub: wardInfo.sub,
-          example: wardInfo.example
+          examples: wardInfo.examples
         };
       }
     },

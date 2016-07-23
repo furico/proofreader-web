@@ -31,7 +31,11 @@
       </tr>
       <tr>
         <th>具体例</th>
-        <td>{{ info.example }}</td>
+        <td>
+          <ul>
+            <li v-for="example in info.examples">{{ example }}</li>
+          </ul>
+        </td>
       </tr>
     </tbody>
   </table>
