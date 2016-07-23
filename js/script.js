@@ -91,10 +91,12 @@
         getPlaceHolder.reset();
         if (!value)
           return;
-        value = preRuleMapper('kanji', value, placeHolderMap);
-        value = preRuleMapper('saidoku', value, placeHolderMap);
-        value = replaceReturnCode(value);
+        var rules = ['kanji', 'saidoku', 'kana3', 'kana2', 'kana1'];
+        rules.forEach(function(rule) {
+          value = preRuleMapper(rule, value, placeHolderMap);
+        });
         value = ruleMapper(value, placeHolderMap);
+        value = replaceReturnCode(value);
         return value;
       }
     }
