@@ -55,3 +55,7 @@ span.found {
     color: #888;
     background-color: #ddd;
   }
+ul#examples {
+  padding: 0;
+  margin: 0 0 0 1em;
+}
