@@ -9,7 +9,7 @@
   var get_rules = (function() {
     var rules = null;
     var request = global.superagent;
-    request.get("/json/rules.json").end(function(err, res) {
+    request.get("json/rules.json").end(function(err, res) {
       rules = res.body;
     });
     return function() {
