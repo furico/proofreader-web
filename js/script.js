@@ -5,12 +5,16 @@
       obj1[key] = obj2[key];
     }
   }
+  function rules_parse(json) {
+    var parsed = json[0];
+    return parsed;
+  }
   // 編集ルールを取得する
   var get_rules = (function() {
     var rules = null;
     var request = global.superagent;
     request.get("json/rules.json").end(function(err, res) {
-      rules = res.body;
+      rules = rules_parse(res.body);
     });
     return function() {
       return rules;
