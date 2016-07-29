@@ -38,9 +38,9 @@ span.found {
   color: #f77;
   font-weight: bold;
   cursor: pointer;
+  text-decoration: underline;
 } span.found:hover {
   color: #f22;
-  text-decoration: underline;
 }
 #rule-info {
   border-collapse: collapse;
