@@ -5,34 +5,41 @@
     <meta name="robots" content="noindex">
     <title>編集ルール一覧</title>
     <link rel="stylesheet" type="text/css" href="css/vendor/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="css/rules.css">
   </head>
   <body id="app">
-    <h1>編集ルール一覧</h1>
-    <div v-for="rule in rules">
-      <table>
-        <tr>
-          <th>ルール</th>
-          <td>{{ rule.name }}</td>
-        </tr>
-        <tr>
-          <th>概要</th>
-          <td>{{ rule.desc }}</td>
-        </tr>
-      </table>
-      <table v-for="(key, val) in rule.words">
-        <tr>
-          <th>対象語句</th>
-          <td>{{ key }}</td>
-        </tr>
-        <tr>
-          <th>修正方法</th>
-          <td>{{ val.sub }}</td>
-        </tr>
-        <tr v-for="example in val.examples">
-          <th>具体例</th>
-          <td>{{ example }}</td>
-        </tr>
-      </table>
+    <div class="container">
+      <h1>編集ルール一覧</h1>
+      <div v-for="rule in rules" class="table-list">
+        <table class="rule-table">
+          <tr>
+            <th>ルール</th>
+            <td>{{ rule.name }}</td>
+          </tr>
+          <tr>
+            <th>概要</th>
+            <td>{{ rule.desc }}</td>
+          </tr>
+        </table>
+        <table v-for="(key, val) in rule.words" class="word-table">
+          <tr>
+            <th>対象語句</th>
+            <td>{{ key }}</td>
+          </tr>
+          <tr>
+            <th>修正方法</th>
+            <td>{{ val.sub }}</td>
+          </tr>
+          <tr>
+            <th>具体例</th>
+            <td>
+              <ul>
+                <li v-for="example in val.examples">{{ example }}</li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
     <script src="js/vendor/superagent.min.js"></script>
     <script src="js/vendor/vue.min.js"></script>

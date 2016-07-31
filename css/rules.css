@@ -1,0 +1,52 @@
+.container {
+  width: 960px;
+  margin: auto;
+}
+.table-list {
+  margin-bottom: 20px;
+}
+.rule-table {
+  width: 100%;
+  border: 2px solid #888;
+  border-collapse: collapse;
+  margin-bottom: -2px;
+}
+  .rule-table tr:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+  }
+  .rule-table th {
+    width: 200px;
+    background-color: #bbb;
+    text-align: left;
+    box-sizing: border-box;
+    padding: 5px 10px;
+  }
+  .rule-table td {
+    box-sizing: border-box;
+    padding: 5px 10px;
+    font-weight: bold;
+  }
+.word-table {
+  width: 100%;
+  border: 2px solid #888;
+  border-collapse: collapse;
+  margin-bottom: -2px;
+}
+  .word-table tr:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+  }
+  .word-table th {
+    width: 200px;
+    text-align: left;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    background-color: #ddd;
+  }
+  .word-table td {
+    box-sizing: border-box;
+    padding: 5px 10px;
+  }
+table ul {
+  padding: 0;
+  margin: 0 0 0 1em;
+}
