@@ -1,25 +1,33 @@
-(function(global) {
+(function (global) {
   'use strict';
+  /**
+  * obj1にobj2のプロパティを追加する
+  */
   function extend(obj1, obj2) {
     for (var key in obj2) {
       obj1[key] = obj2[key];
     }
   }
-  function rules_parse(json) {
-    var parsed = json[0];
-    return parsed;
+  /**
+  * 編集ルールjsonをパースする
+  */
+  function parseRules(json) {
+    // TODO: パース後のデータ構造をrules.jsと同じにする
+    return json[0];
   }
-  // 編集ルールを取得する
-  var get_rules = (function() {
-    var rules = null;
+  /**
+  * 編集ルールを取得してappに設定する
+  */
+  function getRules(app) {
     var request = global.superagent;
-    request.get("json/rules.json").end(function(err, res) {
-      rules = rules_parse(res.body);
+    request.get("json/rules.json").end(function (err, res) {
+      app.rules = parseRules(res.body);
+      app.loaded = true;
     });
-    return function() {
-      return rules;
-    }
-  })();
+  }
+  /**
+  * 検索ヒットした語句の要素を作成する
+  */
   function createFoundElement(rule, word) {
     var span = global.document.createElement('span');
     span.className = 'found';
@@ -28,20 +36,25 @@
     span.textContent = word;
     return span;
   }
-  var getPlaceHolder = (function() {
+  /**
+  * 置換用のプレースホルダーを管理
+  */
+  var getPlaceHolder = (function () {
     var count = -1;
     return {
-      get: function() {
+      get: function () {
         count += 1;
         return '<' + count + '>';
       },
-      reset: function() {
+      reset: function () {
         count = -1;
       }
     };
   })();
-  function preRuleMapper(rule, text, placeHolderMap) {
-    var rules = get_rules();
+  /**
+  * ルール適用の前準備
+  */
+  function preRuleMapper(rules, rule, text, placeHolderMap) {
     var words = rules[rule]['words'];
     var map = {};
     for (var word in words) {
@@ -56,6 +69,9 @@
     extend(placeHolderMap, map);
     return text
   }
+  /**
+  * テキストにルールを適用する
+  */
   function ruleMapper(text, placeHolderMap) {
     for (var key in placeHolderMap) {
       var re = new RegExp(key, 'g');
@@ -63,6 +79,9 @@
     }
     return text
   }
+  /**
+  * 改行コードをbrタグで置換する
+  */
   function replaceReturnCode(text) {
     return text.replace(/\n/g, '<br>');
   }
@@ -70,17 +89,18 @@
     el: '#app',
     data: {
       input: '',
-      info: {}
+      info: {},
+      rules: null,
+      loaded: false
     },
     methods: {
-      showMessage: function(event) {
+      showMessage: function (event) {
         var target = event.target;
         if (target.className !== 'found') {
           this.info = {};
           return;
         }
-        var rules = get_rules();
-        var rule = rules[target.dataset.rule];
+        var rule = this.rules[target.dataset.rule];
         var word = target.dataset.word;
         var wardInfo = rule.words[word];
         this.info = {
@@ -99,13 +119,15 @@
         if (!value)
           return;
         var rules = ['kanji', 'saidoku', 'kana3', 'kana2', 'kana1'];
-        rules.forEach(function(rule) {
-          value = preRuleMapper(rule, value, placeHolderMap);
-        });
+        rules.forEach(function (rule) {
+          value = preRuleMapper(this.rules, rule, value, placeHolderMap);
+        }, this);
         value = ruleMapper(value, placeHolderMap);
         value = replaceReturnCode(value);
         return value;
       }
     }
   });
+  // 編集ルールを設定する
+  getRules(app);
 })(this);

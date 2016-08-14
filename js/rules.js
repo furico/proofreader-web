@@ -1,4 +1,4 @@
-(function(global) {
+(function (global) {
   'use strict';
   function parseRules(json) {
     var parsed = [];
@@ -11,7 +11,7 @@
   }
   function getRules(app) {
     var request = global.superagent;
-    request.get("json/rules.json").end(function(err, res) {
+    request.get("json/rules.json").end(function (err, res) {
       app.rules = parseRules(res.body);
       app.loaded = true;
     });
