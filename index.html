@@ -38,7 +38,7 @@
     </tbody>
   </table>
   <div id="editor" v-if="loaded">
-    <textarea v-model="input"></textarea>
+    <textarea v-model="input" placeholder="ここにテキストを入力してください"></textarea>
     <div id="result" v-html="input | check" v-on:click="showMessage"></div>
   </div>
   <script src="js/vendor/superagent.min.js"></script>
