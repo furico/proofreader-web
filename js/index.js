@@ -118,7 +118,7 @@
         getPlaceHolder.reset();
         if (!value)
           return;
-        var rules = ['kanji', 'saidoku', 'kana3', 'kana2', 'kana1'];
+        var rules = ['kanji1', 'kanji2', 'saidoku', 'kana3', 'kana2', 'kana1'];
         rules.forEach(function (rule) {
           value = preRuleMapper(this.rules, rule, value, placeHolderMap);
         }, this);
